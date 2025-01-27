@@ -1,0 +1,40 @@
+Slowly Changing Dimensions
+
+lowly Changing Dimensions (SCD) are a critical concept in data warehousing and business intelligence. They refer to the methods used to manage and track changes in dimension data over time. This is essential for maintaining historical accuracy and ensuring data integrity in a data warehouse.
+
+In a typical data warehouse, dimension data such as customer information, product details, or employee records can change. Managing these changes efficiently and effectively is where Slowly Changing Dimensions (SCD) come into play. There are several types of SCDs, each providing a different way to handle changes, ensuring that historical data is preserved and accurately reflected.
+
+What are slowly changing dimensions?
+Slowly Changing Dimensions are those parts of the data warehousing structures that change on an irregular basis and not on fixed time intervals. They record and preserve past alterations in data including alterations in the client’s residence or phone contacts. SCDs play a significant role in keeping up-to-date records for analysis, reporting, and decision-making for current and future use. They assist in monitoring the changes of dimensional attributes and guarantee the maintainability of data qualities in case of changing business entities.
+
+Features of Slowly Changing Dimensions:
+Historical Tracking: All types of changes made to stored data in an SCD are retained with history so that trend and historical reports can be created.
+Data Integrity: They ensure the purity of data by enabling change management without decomposition of the data.
+Type-Based Classification: Besides the categorization by connector types, SCDs are also classified into different types based on the management of change (e.g. Type 1, Type 2, Type 3).
+Versioning: In some types of SCDs, new records or new versions are created to hold the history data together with current data such as Type 2.
+Temporal Analysis: They grant time perspective enabling a view of how this data evolves that is crucial for dealing with change or time-series data.
+
+Type 0 (Fixed Dimension)
+Description: In the case of Type 0 dimensions, there are no changes whatsoever. The primary uses for static data are when the data does not change over time, for example; states, zip codes, county codes, SSN, and date of birth etc.
+Implementation: The records located in these tables are unalterable and no modification can be made to the record.
+
+
+Type 1 (Overwrite)
+Description: For changes in Type 1 dimensions; overwriting is used where the new value simply replaces the old value that was already stored. Unfortunately, this method does not save any previous data; that is, it cannot illustrate changes over time.
+Implementation: When an update happens, then the new value replaces the previous value in the database without any interference. It is applied in situations where the historical data is irrelevant to the task, for example, changing a customer’s current address.
+
+Type 2 (Add New Row)
+Description: Type 2 dimensions are stored in a way that a new record is added every time there is a change but the history is retained. Each time a new record is added, a new surrogate also gets created; however, physical relationships are preserved through the use of natural keys.
+Implementation: This can be done by supplementing a flag column (such as _FIVETRAN_DELETED) to determine the active record or through timestamp fields specifying when the record is active or inactive. This method, therefore, enables the tracking of changes over time and is mostly applied to attributes such as product bundles.
+Example: In a product dimension table, every change in the product configuration would mean a new row, with a time stamp indicating the validity of the record.
+
+Type 3 (Add New Attribute)
+Description: Type 3 dimensions record changes by adding an attribute that will hold the prior value of an attribute. This technique enables tracking of a few changes only; it is suitable where only the last change needs to be retained.
+Implementation: The previous value is saved in a new column with a different name than the one in which the current value is saved (e.g. current_address). This is suitable when charting change that is anticipated to occur periodically for example a change of the warehouse’s physical address.
+Example: In the case where a company's warehouse changes, the previous_address column would contain the previous address, while the current_address would contain the new one.
+
+Type 4 (History Table)
+Description: Type 4 dimensions employ the use of the Current table and/or the Historical table. The most recent version of the data is stored in one table while all historical data is stored in another table.
+Implementation: This current data table is updated and the prior information from the current data table is shifted into the history data table. It is suitable where actual data changes within a short period and where details of historical change need to be recorded.
+Example: This approach can be used in tracking the order information where the history table has records of every action taken on the order for instance addition of items to the cart or removal of items.
+
